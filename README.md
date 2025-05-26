@@ -19,5 +19,28 @@
 
 هنوز در حال بررسیه
 
-  🗓 آغاز پروژه: خرداد ۱۴۰۴
+ ## آغاز پروژه: خرداد ۱۴۰۴
+
+  # DIWHL
+
+DIWHL is a time management and habit-building application and website that helps users avoid forgetting their tasks, build good habits, and break bad ones.
+
+## Features
+
+1. Task management with different visibility modes: on a specific day, starting a few days earlier, or until the task is completed
+2. Support for subtasks and progress tracking
+3. Customizable alarms and notifications for tasks and habits
+4. Daily, weekly, and monthly habit creation with detailed tracking
+5. Bilingual support: Persian and English
+6. Offline mode for the Android app with automatic synchronization when connected
+
+## Why this project?
+
+This project was inspired by the real needs of myself and those around me. Existing apps always seemed to be missing something — no subtasks, no early reminders, or no flexible habit tracking. DIWHL is designed to fill those gaps.
+
+## Technologies
+
+Still under consideration.
+
+## Project start: Khordad 1404 (May–June 2025)
 
