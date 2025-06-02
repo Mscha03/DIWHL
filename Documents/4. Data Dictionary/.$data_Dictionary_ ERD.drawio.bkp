@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.5 Chrome/134.0.6998.205 Electron/35.3.0 Safari/537.36" version="27.0.5">
   <diagram name="Page-1" id="r8p4O_eWEzCxsMryv561">
-    <mxGraphModel dx="4180" dy="652" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="4550" dy="847" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -271,9 +271,6 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="g0pEM1Ol_jY0G0fQ0YfE-233" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="g0pEM1Ol_jY0G0fQ0YfE-114" target="g0pEM1Ol_jY0G0fQ0YfE-212" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="g0pEM1Ol_jY0G0fQ0YfE-114" value="" style="swimlane;startSize=0;" parent="1" vertex="1">
           <mxGeometry x="1750" y="1920" width="580" height="340" as="geometry" />
         </mxCell>
@@ -474,7 +471,7 @@
           <mxGeometry x="1330" y="1770" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="g0pEM1Ol_jY0G0fQ0YfE-212" value="" style="swimlane;startSize=0;" parent="1" vertex="1">
-          <mxGeometry x="1910" y="2340" width="300" height="210" as="geometry" />
+          <mxGeometry x="1912.5" y="2560" width="300" height="210" as="geometry" />
         </mxCell>
         <mxCell id="g0pEM1Ol_jY0G0fQ0YfE-217" style="edgeStyle=elbowEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=none;endArrow=none;" parent="g0pEM1Ol_jY0G0fQ0YfE-212" source="g0pEM1Ol_jY0G0fQ0YfE-223" target="g0pEM1Ol_jY0G0fQ0YfE-230" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -501,6 +498,21 @@
         </mxCell>
         <mxCell id="g0pEM1Ol_jY0G0fQ0YfE-235" value="day&lt;div&gt;روز&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="g0pEM1Ol_jY0G0fQ0YfE-212" vertex="1">
           <mxGeometry x="210" y="100" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="tqQAxwKXfqx9s-7o7qNr-3" value="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="tqQAxwKXfqx9s-7o7qNr-4" target="g0pEM1Ol_jY0G0fQ0YfE-114">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2060" y="2300" />
+              <mxPoint x="2060" y="2300" />
+            </Array>
+            <mxPoint x="2340" y="2175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tqQAxwKXfqx9s-7o7qNr-5" value="N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;" edge="1" parent="1" source="tqQAxwKXfqx9s-7o7qNr-4" target="g0pEM1Ol_jY0G0fQ0YfE-212">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tqQAxwKXfqx9s-7o7qNr-4" value="have&lt;div&gt;داشتن&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;fontStyle=1;startSize=0;" vertex="1" parent="1">
+          <mxGeometry x="2020" y="2400" width="80" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
