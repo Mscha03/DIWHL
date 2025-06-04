@@ -1,0 +1,88 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FEF7FF;
+  margin: 150px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h5{
+    color: #49454F;
+}
+
+/* Add padding to containers */
+.container {
+  text-align: center;
+  padding: 48px;
+  background-color: white;
+  border-radius: 25px;
+  width: 410px;
+  margin: auto;
+}
+
+/* Full-width input fields */
+input[type=email], input[type=password] {
+  width: 250px;
+  height: 56px;
+  padding: 15px;
+  margin: 5px 0 12px 0;
+  display: inline-block;
+  border-color: rgb(164, 164, 164);
+  border-width: 1px;
+  border-radius: 5px;
+  
+}
+
+
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #6750A4;
+  color: white;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  width: 250px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+.loginbtn{
+  background-color: #ffffff00;
+  margin: 8px 0;
+  border-color: #CAC4D0;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.7;
+  width: 250px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+.loginbtn:hover {
+  background-color: #efefef;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
