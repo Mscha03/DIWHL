@@ -3,19 +3,17 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-"""
+
 class Task(models.Model):
-    user_id = models.ManyToOneRel(to=User,field=id, field_name='user_id', on_delete=models.CASCADE)
-    title = models.CharField(max_length=50)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='tasks')
+    title = models.CharField(max_length=100)
     description = models.CharField(null=True)
     is_completed = models.BooleanField(default=False)
     has_due_date = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class SubTask(models.Model):
-    task_id = models.ManyToOneRel(to=Task,field=id, field_name='task_id', on_delete=models.CASCADE)
+    task = models.ForeignKey(to=Task,on_delete=models.CASCADE, related_name='subtasks')
     title = models.CharField(max_length=50)
-    is_compeleted = models.BooleanField(default=False)
-
-"""
+    is_completed = models.BooleanField(default=False)
