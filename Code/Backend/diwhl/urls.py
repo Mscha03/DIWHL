@@ -22,4 +22,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('task/', include('task.urls')),
     path('admin/', admin.site.urls),
+    path('api/auth/', include('dj_rest_auth.urls')),  # login/logout/password reset
+    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),  # signup
 ]
