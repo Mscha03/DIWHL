@@ -19,9 +19,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('web.urls')),
-    path('accounts/', include('allauth.urls')),
-    path('task/', include('task.urls')),
     path('admin/', admin.site.urls),
+    #path('accounts/', include('allauth.urls')),
     path('api/auth/', include('dj_rest_auth.urls')),  # login/logout/password reset
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),  # signup
+    path('api/task/', include('task.urls')), # task
 ]
+
