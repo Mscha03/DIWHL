@@ -4,5 +4,4 @@ from .views import HelloView
 
 
 urlpatterns = [
-   path('api/hello/', HelloView.as_view(), name='hello'),
 ]
