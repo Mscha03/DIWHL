@@ -9,7 +9,7 @@ class SubTaskSerializer(serializers.ModelSerializer):
         fields = ['id', 'task', 'title', 'is_completed']
 
 class TaskSerializer(serializers.ModelSerializer):
-    subtasks = SubTaskSerializer(many=True, read_only=True, source='subtasks_set')
+    subtasks = SubTaskSerializer(many=True, read_only=True)
     class Meta:
         model = Task
         fields = ['id', 'user', 'title', 'description', 'is_completed', 'has_due_date', 'created_at', 'updated_at', 'subtasks']
