@@ -109,3 +109,25 @@ class TaskSerializer(WritableNestedModelSerializer):
         instance.save()
 
         return instance
+
+class TaskCompletedSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Task
+        fields = ['id', 'is_completed']
+
+
+    def update(self, instance, validated_data):
+        instance.is_completed = validated_data.get('is_completed', instance.is_completed)
+        instance.save()
+        return instance
+
+class SubTaskCompletedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubTask
+        fields = ['id','task','is_completed']
+
+    def update(self, instance, validated_data):
+        instance.is_completed = validated_data.get('is_completed', instance.is_completed)
+        instance.save()
+        return instance
