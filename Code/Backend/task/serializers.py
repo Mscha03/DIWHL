@@ -39,13 +39,15 @@ class TaskSerializer(WritableNestedModelSerializer):
         subtasks = validated_data.pop('subtasks',[])
         due_date = validated_data.pop('due_date', None)
 
-        task = Task.objects.create( **validated_data)
+        if due_date:# اضافه کردن موعد در صورت وجود
+            task = Task.objects.create(has_due_date=True, **validated_data)
+            DueDate.objects.create(task=task, **due_date)
+        else:
+            task = Task.objects.create(**validated_data)
 
         for subtask in subtasks: #اضافه کردن زیرکار ها در صورت وجود
             SubTask.objects.create(task=task, **subtask)
 
-        if due_date: # اضافه کردن موعد در صورت وجود
-            DueDate.objects.create(task=task, **due_date)
 
         return task
 
@@ -80,9 +82,9 @@ class TaskSerializer(WritableNestedModelSerializer):
 
         # پردازش موعد
         new_due_date_data = validated_data.pop('due_date', None)
+
         if new_due_date_data:
             if hasattr(instance, 'due_date'):
-                if instance.due_date:
                       # موعد قبلی رو ویرایش کن
                     due_date = instance.due_date
                     due_date.id = instance.due_date.id
@@ -92,15 +94,18 @@ class TaskSerializer(WritableNestedModelSerializer):
             else:
                 # موعد جدید بساز
                 DueDate.objects.create(task=instance, **new_due_date_data)
-        else:
+
+            instance.has_due_date = True
+
+        elif hasattr(instance, 'due_date'):
             # اگه چیزی نیومده یعنی حذفش کن
             instance.due_date.delete()
+            instance.has_due_date = False
 
         # به‌روزرسانی بقیه فیلدهای تسک
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
         instance.is_completed = validated_data.get('is_completed', instance.is_completed)
-        instance.has_due_date = validated_data.get('has_due_date', instance.has_due_date)
         instance.save()
 
         return instance
