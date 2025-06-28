@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from habit.models import Habit, HabitPattern, HabitLog
+from habit.utils.enums import HabitFrequency
 
 
 class HabitPatternSerializer(serializers.ModelSerializer):
@@ -44,20 +45,18 @@ class HabitSerializer(serializers.ModelSerializer):
 
 
 def check_pattern(frequency, patterns):
-    print(frequency)
     match frequency:
-        case 'daily':
+        case HabitFrequency.DAILY.value:
             patterns.clear()
             print("daily habit, can't has pattern")
 
-        case 'weekly':
-            print("I'm in weekly")
+        case HabitFrequency.WEEKLY.value:
             for pattern in patterns:
                 if pattern['day'] < 1  or pattern['day'] > 7:
                     print(pattern['day'])
                     patterns.remove(pattern)
 
-        case 'monthly':
+        case HabitFrequency.MONTHLY.value:
             for pattern in patterns:
                 if pattern['day'] < 1 or pattern['day'] > 31:
                     patterns.remove(pattern)
