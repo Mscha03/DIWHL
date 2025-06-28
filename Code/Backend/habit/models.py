@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Habit(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='habits')
     title = models.CharField(max_length=100)
     description = models.TextField(null=True)
     state_mode = models.CharField(max_length=20)
@@ -13,10 +13,10 @@ class Habit(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class HabitPattern(models.Model):
-    habit = models.ForeignKey(to=Habit, on_delete=models.CASCADE)
+    habit = models.ForeignKey(to=Habit, on_delete=models.CASCADE, related_name='patterns')
     day = models.IntegerField()
 
 class HabitLog(models.Model):
-    habit = models.ForeignKey(to=Habit, on_delete=models.CASCADE)
+    habit = models.ForeignKey(to=Habit, on_delete=models.CASCADE, related_name='logs')
     date = models.DateField()
     completion_state = models.IntegerField()
