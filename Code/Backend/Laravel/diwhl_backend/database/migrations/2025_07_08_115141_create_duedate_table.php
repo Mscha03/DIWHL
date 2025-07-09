@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('duedate', function (Blueprint $table) {
+        Schema::create('duedates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('task_id')
-                ->unique()
-                ->constrained('tasks')
-                ->onDelete('cascade');
+            $table->foreignId('task_id')->unique()->constrained()->cascadeOnDelete();
             $table->date('due_at');
             $table->integer('repeat_days')
                 ->nullable()

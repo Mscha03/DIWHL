@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('subtasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('task_id')
-                ->constrained('tasks')
-                ->onDelete('cascade');
+            $table->foreignId('task_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->boolean('is_completed')->default(false);
         });
