@@ -10,6 +10,11 @@ class Task extends Model
         'user_id',
         'title',
         'description',
+        'is_completed',
         'has_due_date',
     ];
+
+    public function dueDate(){
+        return $this->hasOne(DueDate::class);
+    }
 }

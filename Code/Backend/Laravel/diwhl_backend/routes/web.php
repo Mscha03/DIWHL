@@ -24,21 +24,41 @@ Route::prefix('tasks')->name('tasks')->group(function () {
     Route::get('/create', function () {
         return view('tasks.create');
     })->name('.create');
-
     //create new tasks
     Route::post('/store', function (Request $request) {
 
-        $validatedData = $request->validate([
+        $validatedTaskData = $request->validate([
             'user_id' => 'nullable',
             'title' => 'required',
             'description' => 'nullable',
             'has_due_date' => 'nullable',
         ]);
 
-        Task::create([
+
+        if (isset($validatedTaskData['has_due_date'])) {
+            $validatedTaskData['has_due_date'] = 1;
+        } else {
+            $validatedTaskData['has_due_date'] = 0;
+        }
+
+        $task = Task::create([
             'user_id' => 3,
-            ...$validatedData
+            ...$validatedTaskData
         ]);
+
+
+        if ($validatedTaskData['has_due_date'] === 1) {
+
+            $validatedDueDateData = $request->validate([
+                'due_at' => 'required',
+                'repeat_days' => 'nullable',
+            ]);
+
+            $validatedDueDateData['task_id'] = $task->id;
+
+            createDueDate($validatedDueDateData);
+        }
+
 
         return redirect('/tasks');
 
@@ -50,30 +70,44 @@ Route::prefix('tasks')->name('tasks')->group(function () {
     Route::get('/edit/{task}', function (Task $task) {
         return view('tasks.edit', compact('task'));
     })->name('.getedit');
-
     //edit a task
     Route::put('/edit/{task}', function (Request $request, Task $task) {
-        $validatedData = $request->validate([
+        $validatedTaskData = $request->validate([
             'user_id' => 'nullable',
             'title' => 'required',
             'description' => 'nullable',
             'has_due_date' => 'nullable',
-            'due_at' => 'nullable',
         ]);
 
+        $dueDate = new DueDate;
 
+        if (isset($validatedTaskData['has_due_date'])) {
+            $validatedTaskData['has_due_date'] = 1;
+            if (isset($task->dueDate)) {
+                updateDueDate($task->dueDate, $validatedTaskData);
+            } else {
+                $validatedDueDateData = $request->validate([
+                    'due_at' => 'required',
+                    'repeat_days' => 'nullable',
+                ]);
 
-        if (isset($validatedData['has_due_date'])) {
-            $validatedData['has_due_date'] = 1;
+                $validatedDueDateData['task_id'] = $task->id;
+
+                createDueDate($validatedDueDateData);
+            }
         } else {
-            $validatedData['has_due_date'] = 0;
+            $validatedTaskData['has_due_date'] = 0;
+            if (isset($task->dueDate)) {
+                deleteDueDate($task->dueDate);
+            }
         }
-
 
         $task->update([
             'user_id' => 3,
-            ...$validatedData
+            ...$validatedTaskData
         ]);
+
+
 
         return redirect('/tasks');
 
@@ -87,14 +121,36 @@ Route::prefix('tasks')->name('tasks')->group(function () {
         return redirect('/tasks');
     })->name('.delete');
 
+
+
     //get a task
     Route::get('/{task}', function (Task $task) {
         return view('tasks.single', compact('task'));
     })->name('.single');
 
 
-
 });
+
+//duedate
+function createDueDate($subtask)
+{
+    DueDate::create([
+        ...$subtask
+    ]);
+}
+function updateDueDate(DueDate $subtask, $validateData){
+
+    $subtask->update([
+        ...$validateData
+    ]);
+}
+
+function deleteDueDate($subtask){
+    $subtask->delete();
+}
+
+
+
 
 //subtasks TODO:
 Route::prefix('subtasks')->name('subtasks')->group(function () {
@@ -181,12 +237,15 @@ Route::prefix('duedate')->name('duedate')->group(function () {
         return view('dueTates.create');
     })->name('.create');
 
-    //create new tasks
-    Route::post('/create', function (Request $request) {
+    //create new duedatetasks
+    Route::post('/create', function ($request) {
         $validatedData = $request->validate([
             'task_id' => 'required',
-            'title' => 'required',
+            'due_at' => 'required',
+            'repeat_days' => 'nullable',
         ]);
+
+        dd($validatedData);
 
         Task::create([
             ...$validatedData
@@ -220,3 +279,4 @@ Route::prefix('duedate')->name('duedate')->group(function () {
     Route::delete('/delete/{duedate}', function (DueDate $duedate) {
         $duedate->delete();
     })->name('.delete'); });
+
