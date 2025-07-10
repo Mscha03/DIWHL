@@ -7,19 +7,11 @@ use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-
-//    \App\Models\User::create([
-//        'username' => 'mschawsdaewa',
-//        'email' => 'm.saleh.sedeghi@gmail.com',
-//        'password_hash' => bcrypt('123456')
-//    ]);
-
     return view('welcome');
 });
 
 //tasks
 Route::prefix('tasks')->name('tasks')->group(function () {
-
 
     //get all tasks
     Route::get('/', function () {
@@ -36,7 +28,6 @@ Route::prefix('tasks')->name('tasks')->group(function () {
     //create new tasks
     Route::post('/store', function (Request $request) {
 
-
         $validatedData = $request->validate([
             'user_id' => 'nullable',
             'title' => 'required',
@@ -44,23 +35,15 @@ Route::prefix('tasks')->name('tasks')->group(function () {
             'has_due_date' => 'nullable',
         ]);
 
-
-
         Task::create([
             'user_id' => 3,
             ...$validatedData
         ]);
 
-//        $task = new Task();
-//        $t
-//        $task->title = $validatedData['title'];
-//        $task->discription = $validatedData['description'];
-//        $task->has_due_date = $validatedData['has_due_date'];
-
-
         return redirect('/tasks');
 
     })->name('.store');
+
 
 
     //edit a task page
@@ -71,13 +54,26 @@ Route::prefix('tasks')->name('tasks')->group(function () {
     //edit a task
     Route::put('/edit/{task}', function (Request $request, Task $task) {
         $validatedData = $request->validate([
-            'user_id' => 'required',
+            'user_id' => 'nullable',
             'title' => 'required',
             'description' => 'nullable',
+            'has_due_date' => 'nullable',
             'due_at' => 'nullable',
         ]);
 
-        $task->update($validatedData);
+
+
+        if (isset($validatedData['has_due_date'])) {
+            $validatedData['has_due_date'] = 1;
+        } else {
+            $validatedData['has_due_date'] = 0;
+        }
+
+
+        $task->update([
+            'user_id' => 3,
+            ...$validatedData
+        ]);
 
         return redirect('/tasks');
 
