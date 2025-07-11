@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use \App\Models\Task;
 use \App\Models\SubTask;
 use \App\Models\DueDate;
@@ -12,142 +13,15 @@ Route::get('/', function () {
 
 //tasks
 Route::prefix('tasks')->name('tasks')->group(function () {
-
-    //get all tasks
-    Route::get('/', function () {
-        $tasks = Task::all();
-        return view('tasks.index', compact('tasks'));
-    })->name('.index');
-
-
-    //create new task page
-    Route::get('/create', function () {
-        return view('tasks.create');
-    })->name('.create');
-    //create new tasks
-    Route::post('/store', function (Request $request) {
-
-        $validatedTaskData = $request->validate([
-            'user_id' => 'nullable',
-            'title' => 'required',
-            'description' => 'nullable',
-            'has_due_date' => 'nullable',
-        ]);
-
-
-        if (isset($validatedTaskData['has_due_date'])) {
-            $validatedTaskData['has_due_date'] = 1;
-        } else {
-            $validatedTaskData['has_due_date'] = 0;
-        }
-
-        $task = Task::create([
-            'user_id' => 3,
-            ...$validatedTaskData
-        ]);
-
-
-        if ($validatedTaskData['has_due_date'] === 1) {
-
-            $validatedDueDateData = $request->validate([
-                'due_at' => 'required',
-                'repeat_days' => 'nullable',
-            ]);
-
-            $validatedDueDateData['task_id'] = $task->id;
-
-            createDueDate($validatedDueDateData);
-        }
-
-
-        return redirect('/tasks');
-
-    })->name('.store');
-
-
-
-    //edit a task page
-    Route::get('/edit/{task}', function (Task $task) {
-        return view('tasks.edit', compact('task'));
-    })->name('.getedit');
-    //edit a task
-    Route::put('/edit/{task}', function (Request $request, Task $task) {
-        $validatedTaskData = $request->validate([
-            'user_id' => 'nullable',
-            'title' => 'required',
-            'description' => 'nullable',
-            'has_due_date' => 'nullable',
-        ]);
-
-        $dueDate = new DueDate;
-
-        if (isset($validatedTaskData['has_due_date'])) {
-            $validatedTaskData['has_due_date'] = 1;
-            if (isset($task->dueDate)) {
-                updateDueDate($task->dueDate, $validatedTaskData);
-            } else {
-                $validatedDueDateData = $request->validate([
-                    'due_at' => 'required',
-                    'repeat_days' => 'nullable',
-                ]);
-
-                $validatedDueDateData['task_id'] = $task->id;
-
-                createDueDate($validatedDueDateData);
-            }
-        } else {
-            $validatedTaskData['has_due_date'] = 0;
-            if (isset($task->dueDate)) {
-                deleteDueDate($task->dueDate);
-            }
-        }
-
-        $task->update([
-            'user_id' => 3,
-            ...$validatedTaskData
-        ]);
-
-
-
-        return redirect('/tasks');
-
-    })->name('.putedit');
-
-
-    //delete a task
-    Route::delete('/delete/{task}', function (Task $task) {
-        $task->delete();
-
-        return redirect('/tasks');
-    })->name('.delete');
-
-
-
-    //get a task
-    Route::get('/{task}', function (Task $task) {
-        return view('tasks.single', compact('task'));
-    })->name('.single');
-
-
+    Route::get  ('/',               [TaskController::class, 'showAllTasks'])->  name('.index');
+    Route::get  ('/create',         [TaskController::class, 'showCreatePage'])->name('.create');
+    Route::post ('/store',          [TaskController::class, 'storeTask'] )->    name('.store');
+    Route::get  ('/edit/{task}',    [TaskController::class, 'showEditPage'])->  name('.getedit');
+    Route::put  ('/edit/{task}',    [TaskController::class, 'editTask'])->      name('.putedit');
+    Route::delete('/delete/{task}', [TaskController::class, 'deleteTask'])->    name('.delete');
+    Route::get  ('/{task}',         [TaskController::class, 'showSingleTask'])->name('.single');
 });
 
-//duedate
-function createDueDate($subtask)
-{
-    DueDate::create([
-        ...$subtask
-    ]);
-}
-function updateDueDate(DueDate $subtask, $validateData){
-
-    $subtask->update([
-        ...$validateData
-    ]);
-}
-
-function deleteDueDate($subtask){
-    $subtask->delete();
-}
 
 
 
@@ -214,69 +88,3 @@ Route::prefix('subtasks')->name('subtasks')->group(function () {
         $subtask->delete();
     })->name('.delete');
 });
-
-
-//duedate TODO:
-Route::prefix('duedate')->name('duedate')->group(function () {
-
-    //get all duedates
-    Route::get('/', function () {
-        $duedates = DueDate::all();
-        return view('duedates.index', compact('duedates'));
-    })->name('.index');
-
-
-    //get a duedate
-    Route::get('/{duedate}', function (DueDate $dueTate) {
-        return view('duedates.index.single', compact('dueTate'));
-    })->name('.index.single');
-
-
-    //create new task page
-    Route::get('/create', function () {
-        return view('dueTates.create');
-    })->name('.create');
-
-    //create new duedatetasks
-    Route::post('/create', function ($request) {
-        $validatedData = $request->validate([
-            'task_id' => 'required',
-            'due_at' => 'required',
-            'repeat_days' => 'nullable',
-        ]);
-
-        dd($validatedData);
-
-        Task::create([
-            ...$validatedData
-        ]);
-
-    })->name('.create');
-
-
-    //edit a duedate page
-    Route::get('/edit/{duedate}', function (DueDate $duedate) {
-        return view('dueTates.edit', compact('duedate'));
-    })->name('.edit');
-
-    //edit a dueTate
-    Route::put('/edit/{dueTate}', function (Request $request, DueDate $duedate) {
-        $validatedData = $request->validate([
-            'task_id' => 'required',
-            'title' => 'required',
-        ]);
-
-        $duedate->update($validatedData);
-    })->name('.edit');
-
-
-    //delete a task page
-    Route::get('/delete/{duedate}', function (DueDate $duedate) {
-        return view('duedate.delete', compact('duedate'));
-    })->name('.delete');
-
-    //delete a task
-    Route::delete('/delete/{duedate}', function (DueDate $duedate) {
-        $duedate->delete();
-    })->name('.delete'); });
-
