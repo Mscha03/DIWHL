@@ -8,6 +8,83 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $tasks = Task::all();
+        return view('tasks.index', compact('tasks'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('tasks.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validatedTaskData = $this->validateTaskData($request);
+        $validatedDueDateData = $this->validateDueDateData($request);
+        $validatedTaskData['has_due_date'] = $this->validateCheckboxInt($validatedTaskData['has_due_date'] ?? null);
+
+        $task = $this->createTask($validatedTaskData);
+        $this->createDueDateIfExists($task, $validatedDueDateData);
+
+        return redirect('/tasks');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Task $task)
+    {
+        return view('tasks.single', compact('task'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Task $task)
+    {
+        return view('tasks.edit', compact('task'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Task $task)
+    {
+        $validatedTaskData = $this->validateTaskData($request);
+        $validatedTaskData['has_due_date'] = $this->validateCheckboxInt($validatedTaskData['has_due_date']);
+        if (isset($task->dueDate)) {
+            $this->updateOrDeleteDueDate($task, $validatedTaskData);
+        } else {
+            $this->createDueDateIfExists($task, $validatedTaskData);
+        }
+
+        $this->updateTask($task, $validatedTaskData);
+        return redirect('/tasks');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Task $task)
+    {
+        $task->delete();
+        return redirect('/tasks');
+    }
+
+    /**
+     *  ***** pravate functions *****
+     */
     private function createTask(array $validatedData): Task
     {
         return Task::create([
@@ -15,6 +92,7 @@ class TaskController extends Controller
             ...$validatedData
         ]);
     }
+
     private function createDueDateIfExists(Task $task, array $validateData): ?DueDate
     {
         if ($task['has_due_date'] === 1) {
@@ -23,6 +101,7 @@ class TaskController extends Controller
             return null;
         }
     }
+
     private function createDueDate(Task $task, array $validatedData): DueDate
     {
         $validatedData['task_id'] = $task->id;
@@ -30,6 +109,7 @@ class TaskController extends Controller
             ...$validatedData
         ]);
     }
+
     private function validateCheckboxInt($value): int
     {
         if (isset($value)) {
@@ -39,6 +119,7 @@ class TaskController extends Controller
         }
         return $value;
     }
+
     private function validateCheckboxBool($value): bool
     {
         if (isset($value)) {
@@ -48,6 +129,7 @@ class TaskController extends Controller
         }
         return $value;
     }
+
     private function validateTaskData(Request $request): array
     {
         return $request->validate([
@@ -57,6 +139,7 @@ class TaskController extends Controller
             'has_due_date' => 'nullable',
         ]);
     }
+
     private function validateDueDateData(Request $request): array
     {
         if (isset($request['has_due_date'])) {
@@ -64,11 +147,12 @@ class TaskController extends Controller
                 'due_at' => 'required',
                 'repeat_days' => 'nullable',
             ]);
-        }else {
+        } else {
             $validatedData = [];
         }
         return $validatedData;
     }
+
     private function updateTask(Task $task, array $validatedData): Task
     {
         $task->update([
@@ -77,6 +161,7 @@ class TaskController extends Controller
         ]);
         return $task;
     }
+
     private function updateOrDeleteDueDate(Task $task, array $validatedData): Task
     {
         if ($task['has_due_date'] === 1) {
@@ -86,50 +171,5 @@ class TaskController extends Controller
         }
         return $task;
     }
-    public function showAllTasks()
-    {
-        $tasks = Task::all();
-        return view('tasks.index', compact('tasks'));
-    }
-    public function showCreatePage()
-    {
-        return view('tasks.create');
-    }
-    public function storeTask(Request $request)
-    {
-        $validatedTaskData = $this->validateTaskData($request);
-        $validatedDueDateData = $this->validateDueDateData($request);
-        $validatedTaskData['has_due_date'] = $this->validateCheckboxInt($validatedTaskData['has_due_date']??null);
-
-        $task = $this->createTask($validatedTaskData);
-        $this->createDueDateIfExists($task, $validatedDueDateData);
-
-        return redirect('/tasks');
-    }
-    public function showEditPage(Task $task){
-        return view('tasks.edit', compact('task'));
-    }
-    public function editTask(Task $task, Request $request)
-    {
-        $validatedTaskData = $this->validateTaskData($request);
-        $validatedTaskData['has_due_date'] = $this->validateCheckboxInt($validatedTaskData['has_due_date']);
-        if(isset($task->dueDate)){
-            $this->updateOrDeleteDueDate($task, $validatedTaskData);
-        }else {
-            $this->createDueDateIfExists($task, $validatedTaskData);
-        }
-
-        $this->updateTask($task, $validatedTaskData);
-        return redirect('/tasks');
-    }
-    public function deleteTask(Task $task)
-    {
-        $task->delete();
-        return redirect('/tasks');
-    }
-    public function showSingleTask(Task $task){
-        return view('tasks.single', compact('task'));
-    }
-
-
 }
+

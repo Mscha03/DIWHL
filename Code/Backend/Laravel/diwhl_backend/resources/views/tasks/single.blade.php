@@ -48,14 +48,14 @@
             </div>
 
             <div class="flex space-x-4">
-                <a href="{{ route('tasks.getedit', ['task' => $task]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <a href="{{ route('tasks.edit', ['task' => $task]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Edit Task
                 </a>
                 <a href="{{ route('tasks.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Back to All Tasks
                 </a>
                 <!-- delete button-->
-                <form name="deleteform" action="{{route('tasks.delete', ['task' => $task])}}" method="post">
+                <form name="deleteform" action="{{route('tasks.destroy', ['task' => $task])}}" method="post">
                     @method('delete')
                     @csrf
                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">

@@ -18,7 +18,7 @@
                             <div>
                                 <!--title-->
                                 <h3 class="text-lg font-medium text-blue-600">
-                                    <a href="{{ route('tasks.single', ['task' => $task]) }}">{{ $task->title }}</a>
+                                    <a href="{{ route('tasks.show', ['task' => $task]) }}">{{ $task->title }}</a>
                                     @if($task->is_completed)
                                         <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-2">Done</span>
                                     @else
@@ -37,11 +37,11 @@
 
                             <div class="flex space-x-2">
                                 <!--edit button-->
-                                <a href="{{ route('tasks.getedit', ['task' => $task]) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
+                                <a href="{{ route('tasks.edit', ['task' => $task]) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
 
                                 <span class="text-gray-300">|</span>
                                 <!--delete button-->
-                                <form action="{{ route('tasks.delete', ['task' => $task]) }}" method="post">
+                                <form action="{{ route('tasks.destroy', ['task' => $task]) }}" method="post">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>

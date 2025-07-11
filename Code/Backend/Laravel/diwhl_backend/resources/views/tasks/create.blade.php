@@ -25,14 +25,6 @@
                     <textarea name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" rows="4" placeholder="Task description"></textarea>
                 </div>
 
-{{--                <!-- has_due_date checkbox -->--}}
-{{--                <div class="mb-6">--}}
-{{--                    <label class="flex items-center">--}}
-{{--                        <input name="due_at" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" id="hasDueDate">--}}
-{{--                        <span class="ml-2 text-gray-700">Has due date?</span>--}}
-{{--                    </label>--}}
-{{--                </div>--}}
-
                 <!-- has_due_date checkbox -->
                 <div class="mb-4">
                     <label class="flex items-center">
