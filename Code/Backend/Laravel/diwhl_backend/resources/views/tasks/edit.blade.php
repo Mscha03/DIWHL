@@ -6,7 +6,7 @@
     <main class="container mx-auto p-4 mt-6">
         <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
             <h2 class="text-xl font-semibold mb-6">Edit Task</h2>
-            <form action="{{ route('tasks.edit', ['task' => $task]) }}" method="post">
+            <form action="{{ route('tasks.update', ['task' => $task]) }}" method="post">
                 @method('put')
                 @csrf
 

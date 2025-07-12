@@ -62,14 +62,15 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $validatedTaskData = $this->validateTaskData($request);
-        $validatedTaskData['has_due_date'] = $this->validateCheckboxInt($validatedTaskData['has_due_date']);
-        if (isset($task->dueDate)) {
-            $this->updateOrDeleteDueDate($task, $validatedTaskData);
-        } else {
-            $this->createDueDateIfExists($task, $validatedTaskData);
-        }
-
+        $validatedTaskData['has_due_date'] = $this->validateCheckboxInt($validatedTaskData['has_due_date'] ?? null);
+        $validatedDueDateData = $this->validateDueDateData($request);
         $this->updateTask($task, $validatedTaskData);
+
+        if (isset($task->dueDate)) {
+            $this->updateOrDeleteDueDate($task, $validatedDueDateData);
+        } else {
+            $this->createDueDateIfExists($task, $validatedDueDateData);
+        }
         return redirect('/tasks');
     }
 
@@ -81,6 +82,10 @@ class TaskController extends Controller
         $task->delete();
         return redirect('/tasks');
     }
+
+
+
+
 
     /**
      *  ***** pravate functions *****
