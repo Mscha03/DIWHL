@@ -5,9 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\DueDate;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class TaskController extends Controller
+class TaskController extends Controller implements HasMiddleware
 {
+    /**
+     * middleware
+     */
+
+    public static function middleware()
+    {
+        return [
+            new Middleware('auth', except: ['index']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -63,6 +76,7 @@ class TaskController extends Controller
     {
         $validatedTaskData = $this->validateTaskData($request);
         $validatedTaskData['has_due_date'] = $this->validateCheckboxInt($validatedTaskData['has_due_date'] ?? null);
+        $validatedTaskData['is_completed'] = $this->validateCheckboxInt($validatedTaskData['is_completed'] ?? null);
         $validatedDueDateData = $this->validateDueDateData($request);
         $this->updateTask($task, $validatedTaskData);
 
@@ -93,7 +107,8 @@ class TaskController extends Controller
     private function createTask(array $validatedData): Task
     {
         return Task::create([
-            'user_id' => 1, //TODO: نیاز به احراز هویت
+//            'user_id' => 1, //TODO: نیاز به احراز هویت
+            'user_id' => auth()->id(),
             ...$validatedData
         ]);
     }
@@ -141,6 +156,7 @@ class TaskController extends Controller
             'user_id' => 'nullable', //TODO: درست کردن بعد از احراز هویت
             'title' => 'required',
             'description' => 'nullable',
+            'is_completed' => 'nullable',
             'has_due_date' => 'nullable',
         ]);
     }
@@ -161,9 +177,9 @@ class TaskController extends Controller
     private function updateTask(Task $task, array $validatedData): Task
     {
         $task->update([
-            'user_id' => 1, //TODO احراز هویت
             ...$validatedData
         ]);
+//        dd($task);
         return $task;
     }
 
@@ -176,5 +192,7 @@ class TaskController extends Controller
         }
         return $task;
     }
+
+
 }
 

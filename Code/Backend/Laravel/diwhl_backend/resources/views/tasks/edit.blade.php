@@ -26,6 +26,14 @@
                     <textarea name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" rows="4">{{ old('description', $task->description) }}</textarea>
                 </div>
 
+                <!-- done checkbox -->
+                <div class="mb-4">
+                    <label class="flex items-center">
+                        <input name="is_completed" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" id="is_completed" {{ $task['is_completed'] ? 'checked' : '' }} >
+                        <span class="ml-2 text-gray-700">Done?</span>
+                    </label>
+                </div>
+
 
                 <!-- has_due_date checkbox -->
                 <div class="mb-4">
