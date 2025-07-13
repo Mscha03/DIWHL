@@ -9,12 +9,11 @@
 </head>
 
 <body class="bg-gray-100">
-
-@include('layouts.header')
+@include('components.header')
 
 @yield('content')
 
-@include('layouts.footer')
+@include('components.footer')
 
 </body>
 </html>

@@ -20,5 +20,7 @@ class RegisterController extends Controller
             ...$request->validated(),
            'password_hash' => bcrypt($request->validated('password'))
         ]);
+
+        return redirect()->route('login');
     }
 }

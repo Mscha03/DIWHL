@@ -10,8 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::resource('tasks', TaskController::class)->middleware('auth');
-Route::resource('tasks', TaskController::class);
+Route::resource('tasks', TaskController::class)->middleware('auth');
+//Route::resource('tasks', TaskController::class);
 
 
 Route::middleware('guest')->group(function () {
@@ -26,3 +26,4 @@ Route::middleware('auth')->group(function () {
     Route::post('logout',[ LoginController::class, 'logout'])->name('logout');
 });
 
+Route::get('lite', \App\Livewire\TaskList::class);

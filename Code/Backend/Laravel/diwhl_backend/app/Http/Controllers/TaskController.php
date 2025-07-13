@@ -26,7 +26,7 @@ class TaskController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::all()->where('user_id', auth()->id());
         return view('tasks.index', compact('tasks'));
     }
 
