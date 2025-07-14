@@ -1,21 +1,15 @@
-@extends('layouts.base')
-
-@section('page-title', 'edit task')
-
-@section('content')
+<div>
     <main class="container mx-auto p-4 mt-6">
         <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
             <h2 class="text-xl font-semibold mb-6">Edit Task</h2>
-            <form action="{{ route('tasks.update', ['task' => $task]) }}" method="post">
-                @method('put')
-                @csrf
+            <form wire:submit.prevent="update">
 
                 <!--title-->
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                         Title
                     </label>
-                    <input name= "title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" value="{{ old('title', $task->title) }}">
+                    <input wire:model="title" type="text" placeholder="Task Title" id="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
                 </div>
 
                 <!--description-->
@@ -23,13 +17,13 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                         Description
                     </label>
-                    <textarea name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" rows="4">{{ old('description', $task->description) }}</textarea>
+                    <textarea wire:model="description"  name="description" id="description" rows="4" placeholder="Task description"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{$task->description}}</textarea>
                 </div>
 
                 <!-- done checkbox -->
                 <div class="mb-4">
                     <label class="flex items-center">
-                        <input name="is_completed" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" id="is_completed" {{ $task['is_completed'] ? 'checked' : '' }} >
+                        <input wire:model="is_completed" name="is_completed" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" id="is_completed" {{ $task['is_completed'] ? 'checked' : '' }} >
                         <span class="ml-2 text-gray-700">Done?</span>
                     </label>
                 </div>
@@ -38,7 +32,7 @@
                 <!-- has_due_date checkbox -->
                 <div class="mb-4">
                     <label class="flex items-center">
-                        <input name="has_due_date" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" id="hasDueDate" {{ $task['has_due_date'] ? 'checked' : '' }} >
+                        <input wire:model="has_due_date" name="has_due_date" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" id="hasDueDate" {{ $task['has_due_date'] ? 'checked' : '' }}>
                         <span class="ml-2 text-gray-700">Has due date?</span>
                     </label>
                 </div>
@@ -48,10 +42,8 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="due_at">
                         Due Date
                     </label>
-                    <input name="due_at" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="due_at"
-                        @if(isset($task->dueDate))
-                            value="{{$task->dueDate['due_at']}}"
-                        @endif>
+                    <input wire:model="due_at" name="due_at" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="due_at">
+
                 </div>
                 <!-- repeat days -->
                 <div id="dueDateAlarmRepeat" class="mb-4 hidden">
@@ -59,10 +51,7 @@
                         Repeat Alarm
                     </label>
 
-                    <input name="repeat_days" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="repeat_days" type="number" placeholder="repeat days"
-                           @if(isset($task->dueDate))
-                               value="{{$task->dueDate['repeat_days']}}"
-                           @endif>
+                    <input name="repeat_days" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="repeat_days" type="number" placeholder="repeat days">
 
                 </div>
 
@@ -106,4 +95,4 @@
             @endif
         });
     </script>
-@endsection
+</div>

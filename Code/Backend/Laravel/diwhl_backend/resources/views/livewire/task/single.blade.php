@@ -1,6 +1,4 @@
-@extends('layouts.base')
-
-@section('content')
+<div>
     <main class="container mx-auto p-4 mt-6">
         <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
 
@@ -54,15 +52,11 @@
                 <a href="{{ route('tasks.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Back to All Tasks
                 </a>
+
                 <!-- delete button-->
-                <form name="deleteform" action="{{route('tasks.destroy', ['task' => $task])}}" method="post">
-                    @method('delete')
-                    @csrf
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                        Delete Task
-                    </button>
-                </form>
+                <livewire:task.action.delete-task-button :task="$task" wire:key="delete-task-{{$task->id}}"/>
+
             </div>
         </div>
     </main>
-@endsection
+</div>

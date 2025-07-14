@@ -1,20 +1,15 @@
-@extends('layouts.base')
-
-@section('page-title', 'create task')
-
-@section('content')
+<div>
     <main class="container mx-auto p-4 mt-6">
         <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
             <h2 class="text-xl font-semibold mb-6">Create New Task</h2>
-            <form action="{{ route('tasks.store') }}" method="post">
-                @csrf
+            <form wire:submit.prevent="store" >
 
                 <!-- title input-->
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                         Title
                     </label>
-                    <input name="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" placeholder="Task title">
+                    <input wire:model="title" type="text" placeholder="Task Title" id="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
                 </div>
 
                 <!-- description input -->
@@ -22,13 +17,13 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                         Description
                     </label>
-                    <textarea name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" rows="4" placeholder="Task description"></textarea>
+                    <textarea wire:model="description"  name="description" id="description" rows="4" placeholder="Task description"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
                 </div>
 
                 <!-- has_due_date checkbox -->
                 <div class="mb-4">
                     <label class="flex items-center">
-                        <input name="has_due_date" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" id="hasDueDate" >
+                        <input wire:model="has_due_date" name="has_due_date" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" id="hasDueDate" >
                         <span class="ml-2 text-gray-700">Has due date?</span>
                     </label>
                 </div>
@@ -38,14 +33,14 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="due_at">
                         Due Date
                     </label>
-                    <input name="due_at" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="due_at">
+                    <input wire:model="due_at" name="due_at" type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="due_at">
                 </div>
                 <!-- repeat days -->
                 <div id="dueDateAlarmRepeat" class="mb-4 hidden">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="repeat_days">
                         Repeat Alarm
                     </label>
-                    <input name="repeat_days" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="repeat_days" type="number" placeholder="repeat days">
+                    <input wire:model="repeat_days" name="repeat_days" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="repeat_days" type="number" placeholder="repeat days">
                 </div>
 
                 <!-- submit button-->
@@ -91,4 +86,4 @@
             @endif
         });
     </script>
-@endsection
+</div>

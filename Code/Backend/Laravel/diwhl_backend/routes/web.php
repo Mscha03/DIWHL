@@ -2,16 +2,17 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\TaskController;
-use App\Livewire\TaskIndex;
-use App\Models\Task;
+use App\Livewire\task\TaskCreate;
+use App\Livewire\task\TaskEdit;
+use App\Livewire\task\TaskIndex;
+use App\Livewire\task\TaskSingle;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('tasks', TaskController::class)->middleware('auth');
+//Route::resource('tasks', TaskController::class)->middleware('auth');
 
 
 Route::middleware('guest')->group(function () {
@@ -26,4 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::post('logout',[ LoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('tasks2', TaskIndex::class)->name('tasks.index');
+Route::get('tasks', TaskIndex::class)->name('tasks.index');
+Route::get('tasks/create', TaskCreate::class)->name('tasks.create');
+Route::get('tasks/{task}', TaskSingle::class)->name('tasks.show');
+Route::get('tasks/{task}/edit', TaskEdit::class)->name('tasks.edit');

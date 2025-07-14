@@ -7,8 +7,8 @@
 
             @foreach($tasks as $task)
 
-                <!-- Task 1 -->
-                <div class="p-6 hover:bg-gray-50">
+                <!-- Task  -->
+                <div wire:key="task-{{$task->id}}" class="p-6 hover:bg-gray-50">
                     <div class="flex justify-between items-start">
                         <div>
                             <!--title-->
@@ -32,15 +32,12 @@
 
                         <div class="flex space-x-2">
                             <!--edit button-->
-                            <a href="{{ route('tasks.edit', ['task' => $task]) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
+                            <a href="{{ route('tasks.edit', ['task' => $task]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit</a>
 
                             <span class="text-gray-300">|</span>
                             <!--delete button-->
-                            <form action="{{ route('tasks.destroy', ['task' => $task]) }}" method="post">
-                                @method('delete')
-                                @csrf
-                                <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
-                            </form>
+                            <livewire:task.action.delete-task-button :task="$task" wire:key="delete-task-{{$task->id}}"/>
+
                         </div>
 
                     </div>

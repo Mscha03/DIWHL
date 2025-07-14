@@ -21,53 +21,8 @@ class TaskController extends Controller implements HasMiddleware
         ];
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $tasks = Task::all()->where('user_id', auth()->id());
-        return view('tasks.index', compact('tasks'));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('tasks.create');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validatedTaskData = $this->validateTaskData($request);
-        $validatedDueDateData = $this->validateDueDateData($request);
-        $validatedTaskData['has_due_date'] = $this->validateCheckboxInt($validatedTaskData['has_due_date'] ?? null);
-
-        $task = $this->createTask($validatedTaskData);
-        $this->createDueDateIfExists($task, $validatedDueDateData);
-
-        return redirect('/tasks');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Task $task)
-    {
-        return view('tasks.single', compact('task'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        return view('tasks.edit', compact('task'));
-    }
 
     /**
      * Update the specified resource in storage.
@@ -96,8 +51,6 @@ class TaskController extends Controller implements HasMiddleware
         $task->delete();
         return redirect('/tasks');
     }
-
-
 
 
 
