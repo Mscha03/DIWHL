@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TaskController;
+use App\Livewire\TaskIndex;
 use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
@@ -11,7 +12,6 @@ Route::get('/', function () {
 });
 
 Route::resource('tasks', TaskController::class)->middleware('auth');
-//Route::resource('tasks', TaskController::class);
 
 
 Route::middleware('guest')->group(function () {
@@ -26,4 +26,4 @@ Route::middleware('auth')->group(function () {
     Route::post('logout',[ LoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('lite', \App\Livewire\TaskList::class);
+Route::get('tasks2', TaskIndex::class)->name('tasks.index');

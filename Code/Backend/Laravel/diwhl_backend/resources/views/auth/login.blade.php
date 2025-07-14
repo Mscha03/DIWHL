@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.base')
 
 @section('page-title', 'create task')
 

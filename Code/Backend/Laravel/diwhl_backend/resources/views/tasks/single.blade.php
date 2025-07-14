@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.base')
 
 @section('content')
     <main class="container mx-auto p-4 mt-6">

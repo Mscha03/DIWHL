@@ -1,12 +1,9 @@
-@extends('components.layouts.app')
-
-@section('content')
+<x-layouts.app>
     <x-header />
-    <h1>from base</h1>
 
     <main>
-        @yield('main-content')
+        {{$slot}}
     </main>
 
     <x-footer />
-@endsection
+</x-layouts.app>
