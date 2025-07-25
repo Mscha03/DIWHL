@@ -69,7 +69,7 @@ class TaskEdit extends Component
     public function render()
     {
         $task = $this->task;
-        return view('livewire.task.edit', compact('task'))->layout('layouts.base');
+        return view('livewire.task.edit', compact('task'));
     }
 
     /**

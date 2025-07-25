@@ -17,6 +17,6 @@ class TaskSingle extends Component
     public function render()
     {
         $task = $this->task;
-        return view('livewire.task.single')->layout('layouts.base');
+        return view('livewire.task.single');
     }
 }

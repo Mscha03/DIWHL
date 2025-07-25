@@ -8,10 +8,10 @@
     @vite('resources/css/app.css', 'resources/js/app.js')
     <livewire:styles/>
 </head>
-<body>
-
-{{ $slot }}
-
-<livewire:scripts/>
+<body class="min-h-screen flex flex-col">
+        <x-header />
+            {{ $slot }}
+        <x-footer />
+    <livewire:scripts/>
 </body>
 </html>

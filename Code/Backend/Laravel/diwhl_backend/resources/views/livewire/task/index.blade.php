@@ -1,4 +1,4 @@
-<main class="container mx-auto p-4 mt-6">
+<main class="flex-1 container mx-auto p-4 mt-6">
     <div class="bg-white rounded-lg shadow-md overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200">
             <h2 class="text-xl font-semibold">Your Tasks</h2>

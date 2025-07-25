@@ -12,6 +12,7 @@ class TaskIndex extends Component
 
     public function mount()
     {
+
         $this->tasks = Task::all()->where('user_id', auth()->id());
     }
 
@@ -24,7 +25,8 @@ class TaskIndex extends Component
 
     public function render()
     {
-        return view('livewire.task.index')->layout('layouts.base');
+        $tasks=$this->tasks;
+        return view('livewire.task.index', compact('tasks'));
     }
 
 }
